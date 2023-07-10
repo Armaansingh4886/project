@@ -2,6 +2,7 @@ import User from "../models/user.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
+// register
 
 export const register = async (req, res) => {
   try {
@@ -14,7 +15,7 @@ console.log(req.body.username)
       username: req.body.username,
       email: req.body.email,
       password: hash,
-      photo: req.body.photo,
+      ph_no: req.body.ph_no,
     });
 
     
@@ -29,6 +30,8 @@ console.log("e")
       .json({ success: false, message: "failed to register"});
   }
 };
+
+//login
 
 export const login = async (req, res) => {
   const email = req.body.email;
@@ -80,3 +83,5 @@ export const login = async (req, res) => {
       .json({ success: false, message: "failed to login", });
   }
 };
+
+// get user count
