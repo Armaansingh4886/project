@@ -1,7 +1,7 @@
 import User from "../models/user.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-
+import dotenv from "dotenv";
 // register
 
 export const register = async (req, res) => {
@@ -38,7 +38,6 @@ export const login = async (req, res) => {
 
   try {
     const user = await User.findOne({ email });
-    console.log(user);
     if (!user) {
       return res.status(404).json({ sucess: false, message: "No user found" });
     }
@@ -54,13 +53,11 @@ export const login = async (req, res) => {
     }
     const { passsword, role, ...rest } = user._doc;
 
-    console.log(user);
-
-
+    
     // create jwt token
     const token = jwt.sign(
       { id: user._id, role: user.role },
-      process.env.JWT_SECRET_KEY,
+      process.env.JWT_SECRETE_KEY,
       { expiresIn: "15d" }
     );
 
@@ -80,7 +77,7 @@ export const login = async (req, res) => {
   } catch (err) {
     res
       .status(500)
-      .json({ success: false, message: "failed to login", });
+      .json({ success: false, message: "failed to login"+err, });
   }
 };
 

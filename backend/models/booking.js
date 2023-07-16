@@ -3,30 +3,27 @@ import mongoose from "mongoose";
 const bookingSchema = new mongoose.Schema(
   {
     userId: {
+      type: mongoose.Types.ObjectId,
+      ref: "user"
+    },
+    proffessionalId: {
+        type: mongoose.Types.ObjectId,
+        ref: "proffessional"
+      },
+    date_of_service: {
+      type: Date,
+    },
+    time_slot: {
       type: String
     },
-    tourName:{
-type: String,
-required: true
+    payment_method: {
+      type: String
     },
-    userEmail: {
-      type: String,
-    },
-    fullName: {
-      type: String,
-      required: true,
-    },
-    guestSize: {
-      type: Number,
-      required: true
-    },
-    phone: {
-        type: Number,
-        required: true
+    address: {
+        type: String
       },
-      bookAt: {
-        type: Date,
-        required: true
+    approvel: {
+        type: String
       },
       },
   { timestamps: true }

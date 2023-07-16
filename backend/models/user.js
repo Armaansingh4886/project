@@ -16,15 +16,13 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-
-    photo: {
-      type: String,
+    ph_no:{
+      type: String
     },
-
-    role: {
-      type: String,
-      default: "user",
-    },
+    role:{
+      type:String,
+      default: "user"
+    }
   },
   { timestamps: true }
 );

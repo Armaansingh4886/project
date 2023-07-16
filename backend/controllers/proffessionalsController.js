@@ -1,4 +1,4 @@
-import Proffessional from "../models/proffessional.js";
+import Proffessionals from "../models/proffessional.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
@@ -19,7 +19,7 @@ console.log(req.body.username)
       photo: req.body.photo,
       location: req.body.location,
       phno: req.body.phno,
-      proffession: req.body.proffession,
+      profession: req.body.profession,
       experience: req.body.experience,
       exp_photo: req.body.exp_photo,
       min_charges: req.body.min_charges,
@@ -37,7 +37,7 @@ console.log("e")
   } catch(err) {
     res
       .status(500)
-      .json({ success: false, message: "failed to register"});
+      .json({ success: false, message: "failed to register",err});
   }
 };
 
@@ -47,7 +47,7 @@ export const login = async (req, res) => {
   const email = req.body.email;
 
   try {
-    const user = await Proffessional.findOne({ email });
+    const user = await Proffessionals.findOne({ email });
     console.log(user);
     if (!user) {
       return res.status(404).json({ sucess: false, message: "No user found" });
@@ -70,7 +70,7 @@ export const login = async (req, res) => {
     // create jwt token
     const token = jwt.sign(
       { id: user._id, role: user.role },
-      process.env.JWT_SECRET_KEY,
+      process.env.JWT_SECRETE_KEY,
       { expiresIn: "15d" }
     );
 
@@ -90,7 +90,7 @@ export const login = async (req, res) => {
   } catch (err) {
     res
       .status(500)
-      .json({ success: false, message: "failed to login", });
+      .json({ success: false, message: "failed to login",err });
   }
 };
 
@@ -101,15 +101,15 @@ export const getProffessionalBySearch = async(req,res)=>{
 
     //here 'i' means case sensitive
     const City = new RegExp(req.query.city, 'i')
-    const Proffession = parseInt(req.query.proffession)
+    const proffession = req.query.proffession
   
     try {
       // gte means greater than or equal
-      const proffessional = await Proffession.find({ location:City ,  proffession:Proffession}).populate("reviews");
+      const proffessional = await Proffessionals.find({ location:City ,  profession:proffession}).populate("rating");
   
       res.status(200).json({ sucess: true, message: "Successful", data: proffessional });
     } catch (error) {
-      res.status(404).json({ sucess: false, message: "Not found" }); 
+      res.status(404).json({ sucess: false, message: "Not found" ,error}); 
     } 
   }
 

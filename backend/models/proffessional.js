@@ -41,9 +41,19 @@ const proffessionalsSchema = new mongoose.Schema(
     min_charges:{
         type: Number
     },
-    discrition:{
+    role:{
+      type:String,
+      default: "proffessional"
+    },
+    discription:{
         type: String
-    }
+    },
+  
+    rating:[
+      {
+        type: mongoose.Types.ObjectId
+      }
+    ]
 },
   { timestamps: true }
 );
